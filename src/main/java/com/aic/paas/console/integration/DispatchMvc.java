@@ -28,15 +28,14 @@ public class DispatchMvc {
 	
 	@Value("${integration.csys.root}")
 	String csysRoot;
-	
-	
-	@Value("${integration.cres.root}")
-	String cresRoot;
-	
+		
 	
 	@Value("${integration.cdev.root}")
 	String cdevRoot;
 	
+	
+	@Value("${integration.cdep.root}")
+	String cdepRoot;
 	
 	
 	
@@ -111,14 +110,6 @@ public class DispatchMvc {
 	
 	
 	
-	@RequestMapping("/integration/cres")
-	public String forward2Cres(HttpServletRequest request, HttpServletResponse response, String fwr) {
-		BinaryUtils.checkEmpty(fwr, "fwr");
-		fwr = ControllerUtils.formatContextPath(fwr);
-		String url = this.cresRoot + fwr;
-		request.setAttribute("integration_url", url);
-		return "forward:/layout/jsp/integration.jsp";
-	}
 	
 	
 	
@@ -127,6 +118,17 @@ public class DispatchMvc {
 		BinaryUtils.checkEmpty(fwr, "fwr");
 		fwr = ControllerUtils.formatContextPath(fwr);
 		String url = this.cdevRoot + fwr;
+		request.setAttribute("integration_url", url);
+		return "forward:/layout/jsp/integration.jsp";
+	}
+	
+	
+	
+	@RequestMapping("/integration/cdep")
+	public String forward2Cdep(HttpServletRequest request, HttpServletResponse response, String fwr) {
+		BinaryUtils.checkEmpty(fwr, "fwr");
+		fwr = ControllerUtils.formatContextPath(fwr);
+		String url = this.cdepRoot + fwr;
 		request.setAttribute("integration_url", url);
 		return "forward:/layout/jsp/integration.jsp";
 	}
