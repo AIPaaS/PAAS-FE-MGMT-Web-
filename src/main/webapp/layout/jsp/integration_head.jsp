@@ -82,6 +82,74 @@ out.print("var BaseDefaultStyleColor='black';");
 out.print("var BaseDisabledStyleColor='gray';");
 %>
 
+
+
+var CC = {
+	BSMODEL_SHOWMSG_CALLBACK : null,
+	
+	/**
+	 * @param cfg
+	 * 		title 标题, 缺省为消息
+	 * 		msg 信息内容
+	 * 		option 空||0=不显示底 	1只有确定按钮	2=确定 取消
+	 * 		callback(r) 回调方法 点确定时r=ok	点取消时r=cancel
+	 */
+	showMsg : function(cfg) {
+		if(CU.isEmpty(cfg))cfg={};
+		if(CU.isEmpty(cfg.title))cfg.title="消息";
+		if(CU.isEmpty(cfg.msg))cfg.msg="";
+		if(CU.isEmpty(cfg.option))cfg.option=0;
+		$("#BSMODEL_SHOWMSG_TITLE").html(cfg.title);
+		$("#BSMODEL_SHOWMSG_CONTENT").html(cfg.msg);
+		$("#BSMODEL_SHOWMSG_FOOTER").attr("style", "display:"+(cfg.option==0?"none":"block"));
+		$("#BSMODEL_SHOWMSG_BTN_CANCEL").attr("style", "display:"+(cfg.option==2?"":"none"));
+		$("#BSMODEL_SHOWMSG").modal("show");
+		CC.BSMODEL_SHOWMSG_CALLBACK = cfg.callback;
+	},
+	
+	showMsgCallback : function(t) {
+		if(CU.isFunction(CC.BSMODEL_SHOWMSG_CALLBACK)) {
+			CC.BSMODEL_SHOWMSG_CALLBACK(t);
+		}
+	},
+	
+	
+	/**
+	 * 对外提供面包线点击事件
+	 * @param moduId 面包线对应模块ID
+	 * @param moduCode 面包线对应模块代码
+	 * @param url 指向跳转页面的URL
+	 * @return boolean||string false表示中断事件, string表示重写url
+	 */
+	onBreadLineClick : function(moduId, moduCode, url) {
+	},
+	
+	clickBreadLine : function() {
+		var moduCode = this.id.substring(this.id.lastIndexOf('_')+1);
+		var s = this.id.substring(0, this.id.lastIndexOf('_'));
+		var moduId = s.substring(s.lastIndexOf('_')+1);
+		
+		var url = ContextPath + "/dispatch/mi/" + moduId;
+		var ba = CC.onBreadLineClick(moduId, moduCode, url);
+		if(ba === false) return ;
+		if(!CU.isEmpty(ba) && typeof(ba)=="string") url = ba;
+		window.location = url;
+	},
+	
+	refreshBreadLineLinks : function() {
+		var links = $("#BS_BREAD_LINE").find("a");
+		if(!CU.isEmpty(links) && links.length>0) {
+			for(var i=0; i<links.length; i++) {
+				var m = $(links[i]);
+				var aid = m.prop("id");
+				if(!CU.isEmpty(aid) && aid.indexOf("BS_BREAD_LINE_LINK_")==0) {
+					m.bind("click", CC.clickBreadLine);
+				}
+			}
+		}
+	}
+};
+
 </script>
 </head>
 
