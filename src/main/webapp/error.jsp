@@ -47,6 +47,8 @@ if(ex != null) {
 </p>
 <p>
 <a href="<%=refurl%>">返回</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="<%=ContextPath%>/authority/logout">重新登录</a>
 </p>
 </div>
 </div>
