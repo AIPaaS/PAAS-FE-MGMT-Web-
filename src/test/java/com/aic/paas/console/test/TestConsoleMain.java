@@ -7,6 +7,7 @@ public class TestConsoleMain {
 	
 	
 	public static void main(String[] args) {
+		
 		JettyMain.main(args);
 	}
 
