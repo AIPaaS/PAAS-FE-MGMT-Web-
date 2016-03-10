@@ -22,7 +22,7 @@ function autoAdaptPageSize() {
 }
 function init() {
 	var url = "<%=url%>";
-	if(url.indexOf('?')<0) url += "?1=1";
+	if(url.indexOf('?')<0) url += "?PARENT_SID="+SU.id;
 	url += "&ParentLeftWidth="+$("#nav-col").width()+"&ParentHeaderHeight="+$("#header-navbar").height();
 	$("#if_integration").prop("src", url);
 	autoAdaptPageSize();
