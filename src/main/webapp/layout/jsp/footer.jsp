@@ -51,6 +51,9 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
+	if(CU.isFunction(CC.refreshBreadLineLinks)) {
+		CC.refreshBreadLineLinks();
+	}
 	init();
 });
 </script>
