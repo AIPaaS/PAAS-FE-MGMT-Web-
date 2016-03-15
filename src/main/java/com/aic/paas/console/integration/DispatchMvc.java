@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,10 @@ import com.aic.paas.frame.cross.bean.SysModu;
 import com.aic.paas.frame.util.RequestKey;
 import com.aic.paas.frame.util.SysFrameUtil;
 import com.binary.core.util.BinaryUtils;
+import com.binary.framework.bean.User;
 import com.binary.framework.exception.ServiceException;
 import com.binary.framework.util.ControllerUtils;
+import com.binary.framework.web.SessionKey;
 
 
 @Controller
@@ -105,6 +108,12 @@ public class DispatchMvc {
 		fwr = ControllerUtils.formatContextPath(fwr);
 		String url = this.csysRoot + fwr;
 		request.setAttribute("integration_url", url);
+		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute(SessionKey.SYSTEM_USER);
+		String reload = user.getUserId();
+		request.setAttribute("reload", reload);
+		
 		return "forward:/layout/jsp/integration.jsp";
 	}
 	
@@ -118,7 +127,13 @@ public class DispatchMvc {
 		BinaryUtils.checkEmpty(fwr, "fwr");
 		fwr = ControllerUtils.formatContextPath(fwr);
 		String url = this.cdevRoot + fwr;
-		request.setAttribute("integration_url", url);
+		request.setAttribute("integration_url", url);		
+		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute(SessionKey.SYSTEM_USER);
+		String reload = user.getUserId();
+		request.setAttribute("reload", reload);
+		
 		return "forward:/layout/jsp/integration.jsp";
 	}
 	
@@ -130,6 +145,12 @@ public class DispatchMvc {
 		fwr = ControllerUtils.formatContextPath(fwr);
 		String url = this.cdepRoot + fwr;
 		request.setAttribute("integration_url", url);
+		
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute(SessionKey.SYSTEM_USER);
+		String reload = user.getUserId();
+		request.setAttribute("reload", reload);
+		
 		return "forward:/layout/jsp/integration.jsp";
 	}
 	

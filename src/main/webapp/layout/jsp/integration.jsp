@@ -4,6 +4,7 @@
 <%
 String ContextPath = request.getContextPath();
 String url = (String)request.getAttribute("integration_url");
+String reload = (String)  request.getAttribute("reload");
 %>
 
 <jsp:include page="/layout/jsp/integration_head.jsp"></jsp:include>
@@ -24,6 +25,7 @@ function init() {
 	var url = "<%=url%>";
 	if(url.indexOf('?')<0) url += "?PARENT_SID="+SU.id;
 	url += "&ParentLeftWidth="+$("#nav-col").width()+"&ParentHeaderHeight="+$("#header-navbar").height();
+	url += "&reload="+"<%=reload%>";
 	$("#if_integration").prop("src", url);
 	autoAdaptPageSize();
 	$(window).bind("resize", function() {
